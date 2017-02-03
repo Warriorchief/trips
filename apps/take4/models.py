@@ -12,7 +12,7 @@ class Trip(models.Model):
     by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="planner")
     wishers = models.ManyToManyField(User, related_name="desirer") #this is a list
     destination = models.CharField(max_length = 100)
-    start = models.CharField(max_length = 100)
-    end = models.CharField(max_length = 100)
+    start = models.DateField()
+    end = models.DateField()
     plan = models.CharField(max_length = 100)
     created_at = models.DateTimeField(auto_now_add = True)

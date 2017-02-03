@@ -2,10 +2,10 @@
 from django.shortcuts import render, redirect
 from .models import User,Trip
 import bcrypt
+import datetime
 import re
 from django.contrib import messages
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-DATE_REGEX = re.compile (r'^[a-zA-Z]+[0-9]+[0-9]$')  # TRYING TO GIFURE OUT THE DATETIME REGEX for form (Month DD YYYY)
 
 def index(request):
     # User.objects.all().delete()
@@ -97,21 +97,26 @@ def showitem(request,trip_id):
     return render (request, "take4/destination.html", context)
 
 def createtrip(request):
+    if request.method != 'POST':
+        print("You have gotten to this page by invalid means!")
+        return redirect('/')
+    wrong = False
     destination = request.POST['destination']
     plan = request.POST['plan']
     start = request.POST['start']
     end = request.POST['end']
     wrong = False
-    if len(destination) <1 or len(plan) <1 or len(start)<1 or len(end) <1:
+    if len(destination) <1 or len(plan) <1:
         wrong = True
-        messages.warning(request, "None of these four fields can be empty!")
-    #if either the start or end date doens't pass the regex:
-        # wrong = True
-        # messages.warning(request, "Both the start and end dates must be in the format MM/DD/YYYY")
-    #if end date is before start date:
-        # wrong = True
-        # messages.warning(request, "End date can't be before start date!")
-        return redirect('/create')
+        messages.warning(request, "You can't leave any fields blank!")
+    if start < datetime.date.today:
+        wrong = True
+        message.warning(request, "Trip must start in the future")
+    if not end > start:
+        wrong = True
+        messages.warning(request, "End date must be after start date!")
+    if wrong:
+        return redirect('/additem')
     me = User.objects.get(id = request.session['user_id'])
     Trip.objects.create(by = me, destination = destination, start = start, end = end, plan = plan)
     thistrip = Trip.objects.get(plan = plan, destination=destination)
