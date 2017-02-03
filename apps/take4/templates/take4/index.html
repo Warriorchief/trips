@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body{
+        width:86%;
+        padding-left: 200px;
+        padding-bottom: 20px;
+        border: 15px solid darkblue;
+        height: auto;
+        background: linear-gradient(135deg, rgba(254,204,177,1) 0%,rgba(241,116,50,1) 50%,rgba(234,85,7,1) 51%,rgba(251,149,94,1) 100%);
+      }
+      h3{
+        color:red;
+      }
+      h2{
+        font-family: fantasy;
+        color:purple;
+      }
+      h1{
+        color:red;
+        font-style: oblique;
+        font-size:36px;
+        padding-left: 150px;
+      }
+      p{
+        color: navy;
+        font-size: 20px;
+        font-family: cursive;
+      }
+      .regblock{
+        padding-left:30px;
+        padding-bottom: 30px;
+        display: inline-block;
+        height: 650px auto;
+        border: 5px solid green;
+        width: 400px;
+      }
+      .logblock{
+        display: inline-block;
+        padding-left:30px;
+        margin-left:50px;
+        height: 300px;
+        width: 300px;
+        border: 5px solid pink;
+        position: relative; bottom:200px;
+      }
+    </style>
+    <meta charset="utf-8">
+    <title>retake index</title>
+    {% load staticfiles %}
+  </head>
+  <body>
+    <h1>Welcome!</h1>
+    <div class="regblock">
+      {% if messages %}
+        {% for message in messages %}
+          <h3>{{message}}</h3>
+        {% endfor %}
+      {% endif %}
+      <h2>Register</h2>
+      <form action="/register" method="post">
+        {% csrf_token %}
+        <p>Name:</p>
+        <input type="text" name="name" placeholder="(name)">
+        <p>Username:</p>
+        <input type="text" name="username" placeholder="(username)">
+        <p>Password:</p>
+        <input type="text" name="password" placeholder="(password)">
+        <p> *password should be at least 8 characters</p>
+        <p>Confirm PW:</p>
+        <input type="text" name="confirm_password" placeholder="(confirm password)">
+        <input type="submit" value="Register">
+      </form>
+    </div>
+    <div class="logblock">
+      <h2>Login</h2>
+      <form action="/login" method="post">
+        {% csrf_token %}
+        <p>Username:</p>
+        <input type="text" name="username" placeholder="(username)">
+        <p>Password:</p>
+        <input type="password" name="password" placeholder="(password)">
+        <input type="submit" name="" value="Login">
+      </form>
+    </div>
+  </body>
+</html>

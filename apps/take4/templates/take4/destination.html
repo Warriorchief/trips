@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+    *{
+      padding:10px;
+      text-align: center;
+    }
+    body{
+    width:95%;
+    border: 16px solid red;
+    border-radius: 20px;
+    margin: 10px;
+    padding-bottom:10px;
+    background: linear-gradient(135deg, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%);
+    }
+  h1,h3{
+    font-size: 50px;
+    color: navy;
+    font-style: oblique;
+    margin-bottom: -40px;
+  }
+  h2{
+    font-size: 35px;
+    font-variant: small-caps;
+    color: darkgreen;
+    margin-bottom: -45px;
+  }
+  h3{
+    color: magenta;
+  }
+  .clickables{
+    position: absolute; left:1400px; top:50px;
+    font-size:40px;
+  }
+  .outputblock{
+    border-radius: 20px;
+    width:700px;
+    height: 750px;
+    overflow: scroll;
+    border: 10px solid green;
+    padding-left: 20px;
+    margin-left: 10px;
+  }
+  .picblock{
+    margin: 0px;
+    padding: 0px;
+    position:absolute;
+    right:200px;
+    top:120px;
+    border:5px solid orange;
+    height:700px;
+    width:700px;
+  }
+  img{
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height:100%;
+  }
+  </style>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <title>destination</title>
+  </head>
+  <body>
+    <div class="clickables">
+      <a href="/home">Home</a> | <a href="/logout">Logout</a>
+    </div>
+    <div class="outputblock">
+      <h1>{{thistrip.destination}}</h1>
+      <h2>Planned By: {{thistrip.by.name}}</h2>
+      <h2>Description: {{thistrip.plan}}</h2>
+      <h2>Travel Date From: {{thistrip.start}}</h2>
+      <h2>Travel Date To: {{thistrip.end}}</h2>
+      <br>
+      <br>
+      <h1>Other users joining the trip:</h1>
+        {% if wishers %}
+          {% for w in wishers %}
+            {% if w.id != thistrip.by.id %}
+              <h2>{{w.name}}</h2>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+    </div>
+    <div class="picblock"><img src="/static/take4/images/plane.png" alt="safetravels"></div>
+    </div>
+  </body>
+</html>

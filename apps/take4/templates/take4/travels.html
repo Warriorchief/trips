@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      *{
+        padding:10px;
+        text-align: center;
+        margin: auto;
+      }
+      body{
+      width:1600px;
+      height:auto;
+      border: 8px solid purple;
+      border-radius: 32px;
+      padding-left:50px;
+      padding-top:100px;
+      padding-bottom:100px;
+      background: linear-gradient(-45deg, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%);
+      }
+      h1{
+        font-size: 60px;
+        color: green;
+      }
+      h2{
+        font-size: 35px;
+        font-style: italic;
+        color: darkred;
+        margin: 50px 0px 10px 0px;
+      }
+      .clickables{
+        position: absolute; left:1400px; top: 50px;
+        font-size:30px;
+      }
+      .photoblock{
+        padding:0px;
+        margin: 0px;
+        height:200px;
+        width:200px;
+        border:5px dashed orange;
+      }
+      .add_item{
+        position: absolute; left:1350px; bottom: 850px;
+        font-size:30px;
+        color: #421C52;
+      }
+      .mytrips, .othertrips{
+        width: 1400px;
+        margin-bottom:50px;
+        height:auto;
+        overflow:scroll;
+        padding-left:50px;
+        border: 5px solid red;
+        border-radius:10px;
+      }
+      th{
+        font-size:26px;
+        font-weight: bolder;
+      }
+      tr{
+        font-size:22px;
+      }
+      img{
+        margin:0px;
+        padding:0px;
+        width:100%;
+        height:100%;
+      }
+      #blonde{
+        position: absolute; left:150px; top:50px;
+        border: 3px solid orange;
+        width: 120px;
+        height: 120px;
+      }
+      #asian{
+        position: absolute; left:300px; top:50px;
+        border: 3px solid orange;
+        width: 120px;
+        height: 120px;
+      }
+      #latina{
+        position: absolute; left:450px; top:50px;
+        border: 3px solid orange;
+        width: 120px;
+        height: 120px;
+      }
+      #twins{
+        position: absolute; left:600px; top:50px;
+        border: 3px solid orange;
+        width: 120px;
+        height: 120px;
+      }
+    </style>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <title>retake p2</title>
+  </head>
+  <body>
+    <h1>Hello, {{request.session.name}}!</h1>
+    <h2>Your Trip Schedules:</h2>
+    <table class="mytrips">
+      <tr>
+        <th>Destination</th>
+        <th>Travel Start Date</th>
+        <th>Travel End Date</th>
+        <th>Plan</th>
+      </tr>
+      {% if mytrips %}
+        {% for m in mytrips%}
+          <tr>
+            <td><a href = "/trip_items/{{m.id}}">{{m.destination}}</a></td>
+            <td>{{m.start}}</td>
+            <td>{{m.end}}</td>
+            <td>{{m.plan}}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </table>
+
+    <h2>Other Users' Travel Plans:</h2>
+    <table class="othertrips">
+      <tr>
+        <th>Name</th>
+        <th>Destination</th>
+        <th>Travel Start Date</th>
+        <th>Travel End Date</th>
+        <th>Do You Want to Join?</th>
+      </tr>
+      {% if othertrips %}
+        {% for o in othertrips %}
+          <tr>
+            <td>{{o.by.name}}</td>
+            <td><a href = "/trip_items/{{o.id}}">{{o.destination}}</a></td>
+            <td>{{o.start}}</td>
+            <td>{{o.end}}</td>
+            <td>
+              <a href = "/addtrip/{{o.id}}">Join</a>
+            </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </table>
+    <div class="clickables">
+      <a href="logout">Logout</a>
+    </div>
+    <div class="add_item">
+      <a href="additem">Add Travel Plan</a>
+    </div>
+    <div id="blonde" ><img src="/static/take4/images/ang.png" alt="ang"></div>
+    <div id="asian"><img src="/static/take4/images/dome.png" alt="dome"></div>
+    <div id="latina"><img src="/static/take4/images/krem.png" alt="krem"></div>
+    <div id="twins"><img src="static/take4/images/wall.png" alt="wall"></div>
+  </body>
+</html>
